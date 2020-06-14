@@ -12,9 +12,9 @@ public class AnimeRespository {
     public List<Anime> listAllAnime() {
         List<Anime> animeList = new ArrayList<>();
         animeList.add(new Anime(1,"Boku No Hero"));
-        animeList.add(new Anime(1,"Nakula"));
-        animeList.add(new Anime(1,"Sahadeva"));
-        animeList.add(new Anime(1,"Japanese Animation"));
+        animeList.add(new Anime(2,"Nakula"));
+        animeList.add(new Anime(3,"Sahadeva"));
+        animeList.add(new Anime(4,"Japanese Animation"));
         return animeList;
     }
 }
