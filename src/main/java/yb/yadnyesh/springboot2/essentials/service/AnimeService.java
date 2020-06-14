@@ -1,6 +1,8 @@
 package yb.yadnyesh.springboot2.essentials.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import yb.yadnyesh.springboot2.essentials.domain.Anime;
@@ -15,8 +17,8 @@ public class AnimeService {
     private final Utils utils;
     private final AnimeRepository animeRepository;
 
-    public List<Anime> listAllAnime() {
-        return animeRepository.findAll();
+    public Page<Anime> listAllAnime(Pageable pageable) {
+        return animeRepository.findAll(pageable);
     }
 
     public List<Anime> findByName(String name) {
