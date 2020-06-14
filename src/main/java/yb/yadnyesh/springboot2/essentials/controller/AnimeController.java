@@ -26,6 +26,10 @@ public class AnimeController {
     @GetMapping("/")
     public List<Anime> listAllAnime() {
         log.info("Formatted Date:  " + dateUtil.formatLocalDateTimeToDatabaseFormat(LocalDateTime.now()));
-        return Arrays.asList(new Anime("DBZ"), new Anime("Berserk"));
+        return Arrays.asList(
+                new Anime("Boku No Hero"),
+                new Anime("Berserk"),
+                new Anime("Naruto"),
+                new Anime("Japanese Animation"));
     }
 }
