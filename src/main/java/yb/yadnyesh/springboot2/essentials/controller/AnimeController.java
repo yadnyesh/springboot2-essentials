@@ -6,10 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yb.yadnyesh.springboot2.essentials.domain.Anime;
-import yb.yadnyesh.springboot2.essentials.repository.AnimeRespository;
+import yb.yadnyesh.springboot2.essentials.service.AnimeService;
 import yb.yadnyesh.springboot2.essentials.util.Utils;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -19,33 +18,32 @@ import java.util.List;
 public class AnimeController {
 
     private final Utils utils;
-    private final AnimeRespository animeRespository;
+    private final AnimeService animeService;
 
     @GetMapping
     public ResponseEntity<List<Anime>> listAllAnime() {
-        log.info("Formatted Date:  " + utils.formatLocalDateTimeToDatabaseFormat(LocalDateTime.now()));
-        return ResponseEntity.ok(animeRespository.listAllAnime());
+        return ResponseEntity.ok(animeService.listAllAnime());
     }
 
     @GetMapping("/{animeId}")
     public ResponseEntity<Anime> findAnimeById(@PathVariable int animeId) {
-        return ResponseEntity.ok(animeRespository.findById(animeId));
+        return ResponseEntity.ok(animeService.findById(animeId));
     }
 
     @PostMapping
     public ResponseEntity<Anime> saveAnime(@RequestBody Anime anime) {
-        return ResponseEntity.ok(animeRespository.save(anime));
+        return ResponseEntity.ok(animeService.save(anime));
     }
 
     @DeleteMapping("/{animeId}")
     public ResponseEntity<Anime> deleteAnime(@PathVariable int animeId) {
-        animeRespository.delete(animeId);
+        animeService.delete(animeId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping
     public ResponseEntity<Anime> updateAnime(@RequestBody Anime anime) {
-        animeRespository.update(anime);
+        animeService.update(anime);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
