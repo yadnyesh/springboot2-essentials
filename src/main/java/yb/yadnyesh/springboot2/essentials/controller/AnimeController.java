@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import yb.yadnyesh.springboot2.essentials.domain.Anime;
 import yb.yadnyesh.springboot2.essentials.repository.AnimeRespository;
@@ -26,7 +23,7 @@ public class AnimeController {
     private final DateUtil dateUtil;
     private final AnimeRespository animeRespository;
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Anime>> listAllAnime() {
         log.info("Formatted Date:  " + dateUtil.formatLocalDateTimeToDatabaseFormat(LocalDateTime.now()));
         return ResponseEntity.ok(animeRespository.listAllAnime());
@@ -40,5 +37,10 @@ public class AnimeController {
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found"));
         return ResponseEntity.ok(animeFound);
+    }
+
+    @PostMapping
+    public ResponseEntity<Anime> saveAnime(@RequestBody Anime anime) {
+        return ResponseEntity.ok(animeRespository.save(anime));
     }
 }
