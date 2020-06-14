@@ -27,14 +27,6 @@ public class AnimeService {
         return animeRepository.save(animeToAdd);
     }
 
-    @Transactional
-    public Anime saveSimulateException(Anime animeToAdd) {
-        Anime anime = animeRepository.save(animeToAdd);
-        if(true)
-            throw new RuntimeException("bad code");
-        return anime;
-    }
-
     public Anime findById(int animeId) {
         return utils.findAnimeOrThrowNotFound(animeId);
     }
