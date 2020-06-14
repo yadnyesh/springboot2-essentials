@@ -14,19 +14,12 @@ public class AnimeService {
     private final Utils utils;
     private final AnimeRepository animeRepository;
 
-//    private static List<Anime> animeList;
-//
-//    static {
-//        animeList = new ArrayList<>(List.of(
-//                new Anime(1,"Boku No Hero"),
-//                new Anime(2,"Nakula"),
-//                new Anime(3,"Sahadeva"),
-//                new Anime(4,"Japanese Animation")
-//        ));
-//    }
-
     public List<Anime> listAllAnime() {
         return animeRepository.findAll();
+    }
+
+    public List<Anime> findByName(String name) {
+        return animeRepository.findByName(name);
     }
 
     public Anime save(Anime animeToAdd) {
