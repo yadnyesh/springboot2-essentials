@@ -5,13 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import yb.yadnyesh.springboot2.essentials.domain.Anime;
 import yb.yadnyesh.springboot2.essentials.repository.AnimeRespository;
-import yb.yadnyesh.springboot2.essentials.util.DateUtil;
+import yb.yadnyesh.springboot2.essentials.util.Utils;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -20,23 +18,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AnimeController {
 
-    private final DateUtil dateUtil;
+    private final Utils utils;
     private final AnimeRespository animeRespository;
 
     @GetMapping
     public ResponseEntity<List<Anime>> listAllAnime() {
-        log.info("Formatted Date:  " + dateUtil.formatLocalDateTimeToDatabaseFormat(LocalDateTime.now()));
+        log.info("Formatted Date:  " + utils.formatLocalDateTimeToDatabaseFormat(LocalDateTime.now()));
         return ResponseEntity.ok(animeRespository.listAllAnime());
     }
 
     @GetMapping("/{animeId}")
     public ResponseEntity<Anime> findAnimeById(@PathVariable int animeId) {
-        Anime animeFound = animeRespository.listAllAnime()
-                .stream()
-                .filter(s -> s.getId() == animeId)
-                .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found"));
-        return ResponseEntity.ok(animeFound);
+        return ResponseEntity.ok(animeRespository.findById(animeId));
     }
 
     @PostMapping
@@ -48,5 +41,11 @@ public class AnimeController {
     public ResponseEntity<Anime> deleteAnime(@PathVariable int animeId) {
         animeRespository.delete(animeId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping
+    public ResponseEntity<Anime> updateAnime(@RequestBody Anime anime) {
+        animeRespository.update(anime);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }

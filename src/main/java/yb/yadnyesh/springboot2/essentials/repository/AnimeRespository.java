@@ -1,16 +1,19 @@
 package yb.yadnyesh.springboot2.essentials.repository;
 
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.server.ResponseStatusException;
 import yb.yadnyesh.springboot2.essentials.domain.Anime;
+import yb.yadnyesh.springboot2.essentials.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Repository
+@RequiredArgsConstructor
 public class AnimeRespository {
+
+    private final Utils utils;
 
     private static List<Anime> animeList;
     static {
@@ -32,10 +35,16 @@ public class AnimeRespository {
         return animeToAdd;
     }
 
+    public Anime findById(int animeId) {
+        return utils.findAnimeOrThrowNotFound(animeId, animeList);
+    }
+
     public void delete(int animeId) {
-        animeList.remove(animeList.stream()
-                    .filter(s -> s.getId() == animeId)
-                    .findFirst()
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animee not found")));
+        animeList.remove(utils.findAnimeOrThrowNotFound(animeId, animeList));
+    }
+
+    public void update(Anime anime) {
+        animeList.remove(utils.findAnimeOrThrowNotFound(anime.getId(), animeList));
+        animeList.add(anime);
     }
 }
