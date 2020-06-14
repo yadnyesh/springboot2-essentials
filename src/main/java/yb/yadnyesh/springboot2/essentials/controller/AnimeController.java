@@ -9,6 +9,7 @@ import yb.yadnyesh.springboot2.essentials.domain.Anime;
 import yb.yadnyesh.springboot2.essentials.service.AnimeService;
 import yb.yadnyesh.springboot2.essentials.util.Utils;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -37,7 +38,7 @@ public class AnimeController {
     }
 
     @PostMapping
-    public ResponseEntity<Anime> saveAnime(@RequestBody Anime anime) {
+    public ResponseEntity<Anime> saveAnime(@RequestBody @Valid Anime anime) {
         return ResponseEntity.ok(animeService.save(anime));
     }
 
