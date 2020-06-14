@@ -2,6 +2,7 @@ package yb.yadnyesh.springboot2.essentials.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import yb.yadnyesh.springboot2.essentials.domain.Anime;
 import yb.yadnyesh.springboot2.essentials.repository.AnimeRepository;
 import yb.yadnyesh.springboot2.essentials.util.Utils;
@@ -24,6 +25,14 @@ public class AnimeService {
 
     public Anime save(Anime animeToAdd) {
         return animeRepository.save(animeToAdd);
+    }
+
+    @Transactional
+    public Anime saveSimulateException(Anime animeToAdd) {
+        Anime anime = animeRepository.save(animeToAdd);
+        if(true)
+            throw new RuntimeException("bad code");
+        return anime;
     }
 
     public Anime findById(int animeId) {

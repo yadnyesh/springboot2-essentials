@@ -38,7 +38,7 @@ public class AnimeController {
 
     @PostMapping
     public ResponseEntity<Anime> saveAnime(@RequestBody Anime anime) {
-        return ResponseEntity.ok(animeService.save(anime));
+        return ResponseEntity.ok(animeService.saveSimulateException(anime));
     }
 
     @DeleteMapping("/{animeId}")
