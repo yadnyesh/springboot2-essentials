@@ -35,10 +35,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                                         .build(), HttpStatus.NOT_FOUND);
     }
 
-
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    public ResponseEntity<ValidationExceptionDetails> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
-
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
                                                                   HttpHeaders headers,
