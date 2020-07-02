@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import yb.yadnyesh.springboot2.essentials.domain.Anime;
+import yb.yadnyesh.springboot2.essentials.wrapper.PageableResponse;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,8 +28,14 @@ public class SpringClient {
 //                .getForObject("http://localhost:8080/animes/", Anime[].class);
 //        log.info("Anime Array: {}", Arrays.toString(animeArray));
 
-        ResponseEntity<List<Anime>> animeResponseEntity = new RestTemplate()
-                .exchange("http://localhost:8080/animes/", HttpMethod.GET, null, new ParameterizedTypeReference<List<Anime>>() {
+//        ResponseEntity<List<Anime>> animeResponseEntity = new RestTemplate()
+//                .exchange("http://localhost:8080/animes/", HttpMethod.GET, null, new ParameterizedTypeReference<List<Anime>>() {
+//                });
+//
+//        log.info("Anime List: {}", animeResponseEntity.getBody());
+
+        ResponseEntity<PageableResponse<Anime>> animeResponseEntity = new RestTemplate()
+                .exchange("http://localhost:8080/animes/", HttpMethod.GET, null, new ParameterizedTypeReference<PageableResponse<Anime>>() {
                 });
 
         log.info("Anime List: {}", animeResponseEntity.getBody());

@@ -23,15 +23,15 @@ public class AnimeController {
     private final Utils utils;
     private final AnimeService animeService;
 
-    @GetMapping
+    @GetMapping("/list")
     public List<Anime> getAllAnimeAsList(Pageable pageable) {
         return animeService.getAllAnimeAsList();
     }
 
-//    @GetMapping
-//    public ResponseEntity<Page<Anime>> listAllAnime(Pageable pageable) {
-//        return ResponseEntity.ok(animeService.listAllAnime(pageable));
-//    }
+    @GetMapping
+    public ResponseEntity<Page<Anime>> listAllAnime(Pageable pageable) {
+        return ResponseEntity.ok(animeService.listAllAnime(pageable));
+    }
 
     @GetMapping("/{animeId}")
     public ResponseEntity<Anime> findAnimeById(@PathVariable int animeId) {
