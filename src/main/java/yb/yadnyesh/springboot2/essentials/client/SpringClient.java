@@ -2,10 +2,7 @@ package yb.yadnyesh.springboot2.essentials.client;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import yb.yadnyesh.springboot2.essentials.domain.Anime;
 import yb.yadnyesh.springboot2.essentials.wrapper.PageableResponse;
@@ -49,8 +46,14 @@ public class SpringClient {
 
         Anime steinsGate = Anime.builder().name("Steins Gate").url("http://yad.com").build();
         Anime steinsGateSaved = new RestTemplate()
-                .exchange("http://localhost:8080/animes/", HttpMethod.POST, new HttpEntity<>(steinsGate), Anime.class).getBody();
+                .exchange("http://localhost:8080/animes/", HttpMethod.POST, new HttpEntity<>(steinsGate,createJsonHeader()), Anime.class).getBody();
 
         log.info("Anime steinsGateSaved id: {}", steinsGateSaved.getId());
+    }
+
+    private static HttpHeaders createJsonHeader() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        return httpHeaders;
     }
 }
