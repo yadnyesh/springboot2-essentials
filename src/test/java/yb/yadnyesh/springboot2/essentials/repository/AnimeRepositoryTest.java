@@ -91,8 +91,11 @@ class AnimeRepositoryTest {
     @DisplayName("Throw exception when Saving, name is empty")
     public void throwConstraintExceptionWhenNameIsEmpty() {
         Anime anime = new Anime();
-        Assertions.assertThatThrownBy(() -> animeRepository.save(anime))
-                .isInstanceOf(ConstraintViolationException.class);
+//        Assertions.assertThatThrownBy(() -> animeRepository.save(anime))
+//                .isInstanceOf(ConstraintViolationException.class);
+        Assertions.assertThatExceptionOfType(ConstraintViolationException.class)
+                .isThrownBy(() -> animeRepository.save(anime))
+                .withMessageContaining("Name of Anime cannot be empty");
     }
 
 }
