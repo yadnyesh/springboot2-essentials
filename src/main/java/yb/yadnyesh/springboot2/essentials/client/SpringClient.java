@@ -2,6 +2,7 @@ package yb.yadnyesh.springboot2.essentials.client;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,10 @@ public class SpringClient {
 
         log.info("Anime Added id: {}", overloadSaved.getId());
 
+        Anime steinsGate = Anime.builder().name("Steins Gate").url("http://yad.com").build();
+        Anime steinsGateSaved = new RestTemplate()
+                .exchange("http://localhost:8080/animes/", HttpMethod.POST, new HttpEntity<>(steinsGate), Anime.class).getBody();
 
+        log.info("Anime steinsGateSaved id: {}", steinsGateSaved.getId());
     }
 }
