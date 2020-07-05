@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import yb.yadnyesh.springboot2.essentials.domain.Anime;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,6 +84,15 @@ class AnimeRepositoryTest {
         List<Anime> animeList = this.animeRepository.findByName(savedAnime.getName());
         Assertions.assertThat(animeList).isNotEmpty();
         Assertions.assertThat(animeList).contains(savedAnime);
+    }
+
+
+    @Test
+    @DisplayName("Throw exception when Saving, name is empty")
+    public void throwConstraintExceptionWhenNameIsEmpty() {
+        Anime anime = new Anime();
+        Assertions.assertThatThrownBy(() -> animeRepository.save(anime))
+                .isInstanceOf(ConstraintViolationException.class);
     }
 
 }
