@@ -40,5 +40,12 @@ public class SpringClient {
 
         log.info("Anime List: {}", animeResponseEntity.getBody());
 
+
+        Anime overlord = Anime.builder().name("Overlord").url("http://www.google.com").build();
+        Anime overloadSaved = new RestTemplate().postForObject("http://localhost:8080/animes/", overlord, Anime.class);
+
+        log.info("Anime Added id: {}", overloadSaved.getId());
+
+
     }
 }

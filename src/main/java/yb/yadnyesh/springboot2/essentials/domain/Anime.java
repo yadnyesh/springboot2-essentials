@@ -1,9 +1,6 @@
 package yb.yadnyesh.springboot2.essentials.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.Entity;
@@ -19,6 +16,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Entity
 @ToString
+@Builder
 public class Anime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
