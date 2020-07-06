@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import yb.yadnyesh.springboot2.essentials.domain.Anime;
+import yb.yadnyesh.springboot2.essentials.util.AnimeCreator;
 
 import javax.validation.ConstraintViolationException;
 import java.util.List;
@@ -24,13 +25,6 @@ class AnimeRepositoryTest {
     @Autowired
     private AnimeRepository animeRepository;
 
-    private Anime createAnime() {
-        return Anime.builder()
-                .name("Tensei Shitara Slime Datta Ken")
-                .url("http://yad.yb")
-                .build();
-    }
-
     @Test
     void findByName() {
     }
@@ -38,7 +32,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Save creates anime when successful")
     public void savePersistAnimeWhenSuccessful() {
-        Anime anime = createAnime();
+        Anime anime = AnimeCreator.createAnimeToBeSaved();
         Anime savedAnime = this.animeRepository.save(anime);
         Assertions.assertThat(savedAnime.getId()).isNotNull();
         Assertions.assertThat(savedAnime.getName()).isNotNull();
@@ -48,7 +42,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Updates Anime when successful")
     public void updateAnimeWhenSuccessful() {
-        Anime anime = createAnime();
+        Anime anime = AnimeCreator.createAnimeToBeSaved();
         Anime savedAnime = this.animeRepository.save(anime);
         savedAnime.setName("The time I got reincarnated as slime");
         Anime updatedAnime = this.animeRepository.save(savedAnime);
@@ -60,7 +54,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Deletes Anime when successful")
     public void deleteAnimeWhenSuccessful() {
-        Anime anime = createAnime();
+        Anime anime = AnimeCreator.createAnimeToBeSaved();
         Anime savedAnime = this.animeRepository.save(anime);
         this.animeRepository.delete(savedAnime);
         Optional<Anime> animeOptional = this.animeRepository.findById(savedAnime.getId());
@@ -70,7 +64,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Find Anime By Name when successful")
     public void findAnimeByNameWhenSuccessful() {
-        Anime anime = createAnime();
+        Anime anime = AnimeCreator.createAnimeToBeSaved();
         Anime savedAnime = this.animeRepository.save(anime);
         List<Anime> animeList = this.animeRepository.findByName(savedAnime.getName());
         Assertions.assertThat(animeList).isNotEmpty();
@@ -80,7 +74,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Find Anime By Name when successful")
     public void returnEmptyAnimeByNameWhenNotFound() {
-        Anime anime = createAnime();
+        Anime anime = AnimeCreator.createAnimeToBeSaved();
         Anime savedAnime = this.animeRepository.save(anime);
         List<Anime> animeList = this.animeRepository.findByName(savedAnime.getName());
         Assertions.assertThat(animeList).isNotEmpty();
