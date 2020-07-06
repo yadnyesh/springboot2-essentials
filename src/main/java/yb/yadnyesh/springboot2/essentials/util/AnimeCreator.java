@@ -21,6 +21,7 @@ public class AnimeCreator {
 
     public static Anime createValidUpdatedAnime() {
         return Anime.builder()
+                .id(2758)
                 .name("Tensai Shitara Slime Datta Ken Updated")
                 .url("http://www.google.com")
                 .build();

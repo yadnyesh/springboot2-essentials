@@ -40,6 +40,8 @@ class AnimeControllerTest {
                 .thenReturn(AnimeCreator.createValidAnime());
         BDDMockito.when(animeServiceMock.save(AnimeCreator.createValidAnime()))
                 .thenReturn(AnimeCreator.createValidAnime());
+        BDDMockito.when(animeServiceMock.save(AnimeCreator.createValidUpdatedAnime()))
+                .thenReturn(AnimeCreator.createValidUpdatedAnime());
         BDDMockito.doNothing().when(animeServiceMock).delete(ArgumentMatchers.anyInt());
     }
 
@@ -83,6 +85,19 @@ class AnimeControllerTest {
         Assertions.assertThat(responseEntity).isNotNull();
         Assertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
         Assertions.assertThat(responseEntity.getBody()).isNull();
+    }
+
+    @Test
+    @DisplayName("Updates an Anime By Id when successful")
+    public void updateAnime_createsAnimeWhenSuccessful() {
+
+        Anime validUpdatedAnime= AnimeCreator.createValidUpdatedAnime();
+        String expectedName = validUpdatedAnime.getName();
+
+        Anime expectedAnimeName = animeController.saveAnime(AnimeCreator.createValidUpdatedAnime()).getBody();
+
+        Assertions.assertThat(expectedAnimeName).isNotNull();
+        Assertions.assertThat(expectedAnimeName.getName()).isEqualTo(expectedName);
     }
 
 }
