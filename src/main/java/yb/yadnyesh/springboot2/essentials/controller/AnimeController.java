@@ -50,13 +50,13 @@ public class AnimeController {
     }
 
     @DeleteMapping("/{animeId}")
-    public ResponseEntity<Anime> deleteAnime(@PathVariable int animeId) {
+    public ResponseEntity<Void> deleteAnime(@PathVariable int animeId) {
         animeService.delete(animeId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping
-    public ResponseEntity<Anime> updateAnime(@RequestBody Anime anime) {
+    public ResponseEntity<Void> updateAnime(@RequestBody Anime anime) {
         animeService.update(anime);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
