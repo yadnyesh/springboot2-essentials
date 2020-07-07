@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import yb.yadnyesh.springboot2.essentials.domain.Anime;
+import yb.yadnyesh.springboot2.essentials.exception.ResourceNotFoundException;
 import yb.yadnyesh.springboot2.essentials.repository.AnimeRepository;
 import yb.yadnyesh.springboot2.essentials.util.AnimeCreator;
 import yb.yadnyesh.springboot2.essentials.util.Utils;
@@ -83,12 +84,22 @@ class AnimeServiceTest {
     }
 
     @Test
-    @DisplayName("Removed Anime By Id when successful")
+    @DisplayName("Delete Anime By Id when successful")
     public void deleteAnime_createsAnimeWhenSuccessful() {
 
         Assertions.assertThatCode(() -> animeService.delete(1))
                 .doesNotThrowAnyException();
     }
+
+    @Test
+    @DisplayName("Delete Anime Throws ResourceNotFound By Id when Anime does not exist")
+    public void deleteAnime_throwsResourceNotFoundWhenSuccessful() {
+        BDDMockito.when(utils.findAnimeOrThrowNotFound(ArgumentMatchers.anyInt()))
+                .thenThrow(new ResourceNotFoundException("Anime Not Found"));
+        Assertions.assertThatExceptionOfType(ResourceNotFoundException.class)
+                .isThrownBy(() -> animeService.delete(1));
+    }
+
 
     @Test
     @DisplayName("Updates an Anime By Id when successful")
