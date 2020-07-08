@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import yb.yadnyesh.springboot2.essentials.domain.Anime;
 import yb.yadnyesh.springboot2.essentials.service.AnimeService;
@@ -45,6 +46,7 @@ public class AnimeController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Anime> saveAnime(@RequestBody @Valid Anime anime) {
         return ResponseEntity.ok(animeService.save(anime));
     }
