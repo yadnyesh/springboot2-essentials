@@ -9,10 +9,14 @@ import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -31,6 +35,7 @@ import java.util.Optional;
 public class AnimeControllerIT {
 
     @Autowired
+    @Qualifier(value = "testRestTemplateRoleUser")
     private TestRestTemplate testRestTemplate;
 
     @LocalServerPort
@@ -41,6 +46,19 @@ public class AnimeControllerIT {
 
     @Mock
     private AnimeService animeServiceMock;
+
+
+    @TestConfiguration
+    static class Config {
+        @Bean(name = "testRestTemplateRoleUser")
+        public TestRestTemplate testRestTemplateRoleUserCreator() {
+            new RestTemplateBuilder()
+                    .rootUri("http://localhost:")
+                    .basicAuthentication("devdojo","academy");
+            return new TestRestTemplate("devdojo","academy");
+        }
+    }
+
 
     @BeforeEach
     public void setUp(){
