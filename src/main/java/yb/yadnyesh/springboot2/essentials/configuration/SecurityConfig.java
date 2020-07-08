@@ -39,17 +39,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //@formatter:off
         http
-                .csrf()
-                .disable()
-//                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-//                .and()
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
+            .csrf()
+            .disable()
+    //                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+    //                .and()
+            .authorizeRequests()
+                .antMatchers("/animes/admin/**").hasRole("ADMIN")
+                .antMatchers("/animes/**").hasRole("USER")
+                .anyRequest().authenticated()
                 .and()
-                .formLogin()
+            .formLogin()
                 .and()
                 .httpBasic();
+        //@formatter:off
     }
 }
