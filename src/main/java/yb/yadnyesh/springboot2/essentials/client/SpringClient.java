@@ -3,6 +3,7 @@ package yb.yadnyesh.springboot2.essentials.client;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 import yb.yadnyesh.springboot2.essentials.domain.Anime;
 import yb.yadnyesh.springboot2.essentials.wrapper.PageableResponse;
@@ -13,6 +14,7 @@ import java.util.List;
 @Slf4j
 public class SpringClient {
     public static void main(String[] args) {
+        log.info(new BCryptPasswordEncoder().encode("academy"));
 //        ResponseEntity<Anime> animeResponseEntity = new RestTemplate()
 //                                                    .getForEntity("http://localhost:8080/animes/2", Anime.class);
 //        log.info("Response Entity {}", animeResponseEntity);
