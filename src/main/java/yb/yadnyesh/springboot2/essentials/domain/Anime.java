@@ -1,5 +1,6 @@
 package yb.yadnyesh.springboot2.essentials.domain;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
 
@@ -24,6 +25,7 @@ public class Anime {
 
     @NotNull
     @NotEmpty(message = "Name of Anime cannot be empty")
+    @Schema(description = "Anime's name", example = "Yadnyesh")
     private String name;
 
     @URL
